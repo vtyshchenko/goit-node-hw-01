@@ -21,7 +21,7 @@ async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case 'list':
       const contacts = await contactsList.listContacts();
-      console.log(contacts);
+      console.table(contacts);
       break;
 
     case 'get':
@@ -29,12 +29,12 @@ async function invokeAction({ action, id, name, email, phone }) {
       if (!contact) {
         throw new Error(`Contact with id = ${id} not found`);
       }
-      console.log(contact);
+      console.table(contact);
       break;
 
     case 'add':
       const addedContact = await contactsList.addContact(name, email, phone);
-      console.log(addedContact);
+      console.table(addedContact);
       break;
 
     case 'remove':
@@ -42,7 +42,7 @@ async function invokeAction({ action, id, name, email, phone }) {
       if (!removedContact) {
         return
       }
-      console.log(removedContact);
+      console.table(removedContact);
       break;
 
     case 'update':
@@ -51,10 +51,18 @@ async function invokeAction({ action, id, name, email, phone }) {
       if (!updatedContact) {
         throw new Error(`Contact with id = ${id} not found`);
       }
-      console.log(updatedContact);
+      console.table(updatedContact);
       break;
 
     default:
+      const option = [
+        { key: '-a --action [list || get|| add || remove || update]', name: 'Programm operation' },
+        { key: '-i --id <value>', name: 'Contact id' },
+        { key: '-n --name <value>', name: 'Contact name' },
+        { key: '-e --email <value>', name: 'Contact email' },
+        { key: '-p --phone <value>', name: 'Contact phone' },
+      ];
+      console.table(option);
       console.warn('\x1B[31m Unknown action type!');
   }
 }
